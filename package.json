@@ -19,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/trancuong21102/learn-nodejs/issues"
   },
-  "homepage": "https://github.com/trancuong21102/learn-nodejs#readme"
+  "homepage": "https://github.com/trancuong21102/learn-nodejs#readme",
+  "dependencies": {
+    "express": "5.0.1"
+  }
 }

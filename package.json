@@ -1,0 +1,23 @@
+{
+  "name": "first_nodejs",
+  "version": "1.0.0",
+  "description": "learn nodejs",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/trancuong21102/learn-nodejs.git"
+  },
+  "keywords": [
+    "nodejs",
+    "express"
+  ],
+  "author": "pinnih",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/trancuong21102/learn-nodejs/issues"
+  },
+  "homepage": "https://github.com/trancuong21102/learn-nodejs#readme"
+}

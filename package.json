@@ -34,10 +34,12 @@
   },
   "homepage": "https://github.com/trancuong21102/learn-nodejs#readme",
   "dependencies": {
+    "@prisma/client": "6.3.0",
     "dotenv": "16.4.7",
     "ejs": "3.1.10",
     "express": "5.0.1",
-    "mysql2": "^3.18.0"
+    "mysql2": "^3.18.0",
+    "prisma": "6.3.0"
   },
   "devDependencies": {
     "@types/ejs": "3.1.5",

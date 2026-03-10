@@ -35,8 +35,9 @@
                     <td><%= user.email %></td>
                     <td><%= user.address %></td>
                     <td class="d-flex justify-content-center gap-2">
+                            <a href="/handle-get-user/<%= user.id %>" class="btn btn-warning">View</a>
                         <form action="/handle-delete-user/<%= user.id %>" method="post">
-                            <button class="btn btn-danger">Delete</button>
+                            <button type="submit" class="btn btn-danger">Delete</button>
                         </form>
                        
                     </td>

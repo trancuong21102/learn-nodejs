@@ -1,7 +1,6 @@
 import  'dotenv/config';
 import express from 'express';
 import webRoutes from './routes/web';
-import getConnection from './config/database';
 const app = express();
 const port = process.env.PORT || 3000;
 

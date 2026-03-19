@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="Hỏi Dân IT - Dự án laptopshop" />
+    <meta name="author" content="Hỏi Dân IT" />
+    <title>User Management - Hỏi Dân IT</title>
+    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
+    <link href="/admin/css/styles.css" rel="stylesheet" />
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+</head>
+
+<body class="sb-nav-fixed">
+    <%- include('../layout/header'); -%>
+
+        <div id="layoutSidenav">
+            <%- include('../layout/sideNav'); -%>
+
+                <div id="layoutSidenav_content">
+                    <main>
+                        <div class="container-fluid px-4">
+                            <div class="container-fluid px-4">
+                                <h1 class="mt-4">Manage Users</h1>
+                                <ol class="breadcrumb mb-4">
+                                    <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
+                                    <li class="breadcrumb-item active">Users</li>
+                                </ol>
+                               
+                            </div>
+
+                            <div class="d-flex justify-content-between mb-3">
+                                <h5>Table USers:</h5>
+                                <a href="/admin/user/create">
+                                    <button class="btn btn-primary">Create User</button>
+                                </a>
+                            </div>
+                            <table class="table table-hover table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">name</th>
+                                        <th scope="col">email</th>
+                                        <th scope="col">address</th>
+                                        <th scope="col">action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% name.forEach((user)=> { %>
+                                        <tr>
+                                            <th scope="row">
+                                                <%= user.id %>
+                                            </th>
+                                            <td>
+                                                <%= user.fullName %>
+                                            </td>
+                                            <td>
+                                                <%= user.username %>
+                                            </td>
+                                            <td>
+                                                <%= user.address %>
+                                            </td>
+                                            <td class="d-flex justify-content-center gap-2">
+                                                <a href="/admin/get-user/<%= user.id %>"
+                                                    class="btn btn-warning">View</a>
+                                                <form action="/admin/delete-user/<%= user.id %>" method="post">
+                                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                                </form>
+
+                                            </td>
+                                        </tr>
+                                        <% }) %>
+                                </tbody>
+                            </table>
+                        </div>
+                    </main>
+                    <%- include('../layout/footer'); -%>
+                </div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+            crossorigin="anonymous"></script>
+        <script src="/admin/js/scripts.js"></script>
+
+</html>

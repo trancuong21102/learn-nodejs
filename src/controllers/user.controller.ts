@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { getAllUsers, handleCreateUser, handleDeleteUser, handleGetUserDetail, handleUpdateUser } from 'services/user-service';
+import { getAllRoles, getAllUsers, handleCreateUser, handleDeleteUser, handleGetUserDetail, handleUpdateUser } from 'services/user-service';
 
 const getHomePage = async (req: Request, res: Response) => {
     //get users
@@ -8,36 +8,40 @@ const getHomePage = async (req: Request, res: Response) => {
     return res.render("home", { name: users })
 }
 
-const getCreateUserPage = (req: Request, res: Response) => {
-    return res.render("create-user")
+const getCreateUserPage = async(req: Request, res: Response) => {
+    const roles = await getAllRoles();
+    return res.render("admin/user/create.ejs", { roles })
 }
 
 const getUserDetail = async(req: Request, res: Response) => {
     const { id } = req.params;
-     
+    const roles = await getAllRoles();
     const user = await handleGetUserDetail(id)
-    return res.render("view-user",{id: id, user: user})
+    return res.render("admin/user/detail",{id: id, user: user, roles: roles})
 }
 
 const postCreateUser = async (req: Request, res: Response) => {
-    const { fullName, email, address } = req.body;
-    console.log("check data", fullName, email, address);
-    console.log("check data", req.body);
-    await handleCreateUser(fullName, email, address);
-    return res.redirect("/")
+    const { fullName, username,phone,role, address } = req.body;
+
+    const file = req.file;
+    const avatar = file ? file.filename : "";
+    await handleCreateUser(fullName, username, phone, role, address, avatar);
+    return res.redirect("/admin/user")
 }
 
 const postDeleteUser = async (req: Request, res: Response) => {
     const { id } = req.params 
     await handleDeleteUser(id);
-    return res.redirect("/")
+    return res.redirect("/admin/user")
 }
 
 const putUpdateUser = async (req: Request, res: Response) => {
+    const { fullName, username,phone,role, address } = req.body;
     const { id } = req.params;
-    const { fullName, email, address } = req.body ;
-    await handleUpdateUser(id,  fullName, email, address );
-    return res.redirect("/")
+    const file = req.file;
+    const avatar = file ? file.filename : "";
+     await handleUpdateUser(id.toString(), fullName, username, phone, role, address, avatar);
+    return res.redirect("/admin/user")
 }
 
 export {

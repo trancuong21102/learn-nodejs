@@ -1,15 +1,25 @@
 import { prisma } from "config/client";
-import getConnection from "config/database";
+import { ACCOUT_TYPE } from "config/constant";
 
-const handleCreateUser = async (fullName: string, email: string, address: string) => {
-    console.log("insert a new user:", fullName, email, address);
+import bcrypt from "bcrypt";
+const saltRounds = 10;
+
+const hashPassword = async (plainText: string) => {
+    return await bcrypt.hash(plainText, saltRounds);
+};
+
+const handleCreateUser = async (fullName: string, username: string, phone: string, role: string, address: string, avatar: string) => {
+    const defaultPassword = await hashPassword("123456");
    const newUser = await prisma.user.create({
         data: {
             fullName: fullName,
-            username: email,
-            password : "",
-            accountType: "",
-            phone: ""
+            username: username,
+            password : defaultPassword, 
+            accountType: ACCOUT_TYPE.SYSTEM,
+            phone: phone,
+            address: address,
+            avatar: avatar,
+            roleId: +role //"22" => 22
         }
    })
 
@@ -24,17 +34,20 @@ const handleDeleteUser = async (id: string | string[]) => {
     return deleteUser;
 }
 
-const handleUpdateUser = async (id: string | string[], fullName: string, email: string, address: string) => {
+const handleUpdateUser = async (id: string, fullName: string, username: string, phone: string, role: string, address: string, avatar: string) => {
    const updateUser = await prisma.user.update({
     where: {
-        id: Number(id)
+        id: Number(id),
     },
     data: {
          fullName: fullName,
-            username: email,
+            username: username,
             password : "",
             accountType: "",
-            phone: ""
+            phone: phone,
+            address: address,
+            ...(avatar !== undefined && { avatar }),
+            roleId: +role
     }
    })
 
@@ -45,6 +58,11 @@ const handleUpdateUser = async (id: string | string[], fullName: string, email: 
 const getAllUsers = async () => {
     const users = await prisma.user.findMany();
     return users;
+}
+
+const getAllRoles = async () => {
+    const roles = await prisma.role.findMany();
+    return roles;
 }
 
 const handleGetUserDetail = async (id: string | string[]) => {
@@ -61,5 +79,7 @@ export {
     getAllUsers,
     handleDeleteUser,
     handleGetUserDetail,
-    handleUpdateUser
+    handleUpdateUser,
+    getAllRoles,
+    hashPassword
 }

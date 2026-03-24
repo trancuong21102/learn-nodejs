@@ -5,7 +5,7 @@ const getHomePage = async (req: Request, res: Response) => {
     //get users
     const users = await getAllUsers();
     console.log("check users", users);
-    return res.render("home", { name: users })
+    return res.render("client/home/show", { name: users })
 }
 
 const getCreateUserPage = async(req: Request, res: Response) => {

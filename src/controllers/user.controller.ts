@@ -1,11 +1,11 @@
 import { Request, Response } from 'express';
+import { getProducts } from 'services/client/item.service';
+import { handleDeleteProduct } from 'services/product-service';
 import { getAllRoles, getAllUsers, handleCreateUser, handleDeleteUser, handleGetUserDetail, handleUpdateUser } from 'services/user-service';
 
 const getHomePage = async (req: Request, res: Response) => {
-    //get users
-    const users = await getAllUsers();
-    console.log("check users", users);
-    return res.render("client/home/show", { name: users })
+    const products = await getProducts();
+    return res.render("client/home/show", { products })
 }
 
 const getCreateUserPage = async(req: Request, res: Response) => {
@@ -44,11 +44,18 @@ const putUpdateUser = async (req: Request, res: Response) => {
     return res.redirect("/admin/user")
 }
 
+const postDeleteProduct = async (req: Request, res: Response) => {
+    const { id } = req.params 
+    await handleDeleteProduct(id);
+    return res.redirect("/admin/product")
+}
+
 export {
     getHomePage,
     getCreateUserPage,
     postCreateUser,
     postDeleteUser,
     getUserDetail,
-    putUpdateUser
+    putUpdateUser,
+    postDeleteProduct
 }

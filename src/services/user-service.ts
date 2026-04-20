@@ -1,7 +1,7 @@
 import { prisma } from "config/client";
-import { ACCOUT_TYPE } from "config/constant";
 
 import bcrypt from "bcrypt";
+import { ACCOUNT_TYPE } from "config/constant";
 const saltRounds = 10;
 
 const hashPassword = async (plainText: string) => {
@@ -15,7 +15,7 @@ const handleCreateUser = async (fullName: string, username: string, phone: strin
             fullName: fullName,
             username: username,
             password : defaultPassword, 
-            accountType: ACCOUT_TYPE.SYSTEM,
+            accountType: ACCOUNT_TYPE.SYSTEM,
             phone: phone,
             address: address,
             avatar: avatar,
@@ -74,6 +74,11 @@ const handleGetUserDetail = async (id: string | string[]) => {
     return user;
 }
 
+const getAllProducts = async () => {
+    const products = await prisma.product.findMany();
+    return products;
+}
+
 export {
     handleCreateUser,
     getAllUsers,
@@ -81,5 +86,6 @@ export {
     handleGetUserDetail,
     handleUpdateUser,
     getAllRoles,
-    hashPassword
+    hashPassword,
+    getAllProducts
 }
